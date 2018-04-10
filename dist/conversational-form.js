@@ -4202,13 +4202,17 @@ var cf;
             var currentType = this.inputElement.getAttribute("type");
             var isCurrentInputTypeTextAreaButNewTagPassword = this._currentTag.type == "password" && currentType != "password";
             var isCurrentInputTypeInputButNewTagNotPassword = this._currentTag.type != "password" && currentType == "password";
-            var isCurrentInputTypeTextAreaButNewTagNumberOrEmail = (this._currentTag.type == "email" && currentType != "email") || (this._currentTag.type == "number" && currentType != "number");
+            var isCurrentInputTypeTextAreaButNewTagNumberOrEmailOrDate = (this._currentTag.type == "email" && currentType != "email") ||
+                (this._currentTag.type == "number" && currentType != "number") ||
+                (this._currentTag.type == "date" && currentType != "date") ||
+                (this._currentTag.type == "datetime-local" && currentType != "datetime-local") ||
+                (this._currentTag.type == "time" && currentType != "time");
             // remove focus and blur events, because we want to create a new element
             if (this.inputElement && (isCurrentInputTypeTextAreaButNewTagPassword || isCurrentInputTypeInputButNewTagNotPassword)) {
                 this.inputElement.removeEventListener('focus', this.onInputFocusCallback, false);
                 this.inputElement.removeEventListener('blur', this.onInputBlurCallback, false);
             }
-            if (isCurrentInputTypeTextAreaButNewTagPassword || isCurrentInputTypeTextAreaButNewTagNumberOrEmail) {
+            if (isCurrentInputTypeTextAreaButNewTagPassword || isCurrentInputTypeTextAreaButNewTagNumberOrEmailOrDate) {
                 // change to input
                 var input_1 = document.createElement("input");
                 Array.prototype.slice.call(this.inputElement.attributes).forEach(function (item) {
@@ -4217,7 +4221,11 @@ var cf;
                 input_1.setAttribute("autocomplete", "new-password");
                 this.inputElement.parentNode.replaceChild(input_1, this.inputElement);
                 this.inputElement = input_1;
-                if (this._currentTag.type === "number" || this._currentTag.type === "email") {
+                if (this._currentTag.type === "number" ||
+                    this._currentTag.type === "email" ||
+                    this._currentTag.type === "date" ||
+                    this._currentTag.type === "datetime-local" ||
+                    this._currentTag.type === "time") {
                     // if field is type number or email then add type to user input
                     this.inputElement.type = this._currentTag.type;
                     input_1.setAttribute("type", this._currentTag.type);
@@ -4254,7 +4262,7 @@ var cf;
             // replace textarea and visa versa
             this.checkForCorrectInputTag();
             // set input field to type password if the dom input field is that, covering up the input
-            var isInputSpecificType = ["password", "number", "email"].indexOf(this._currentTag.type) !== -1;
+            var isInputSpecificType = ["password", "number", "email", "date", "datetime-local", "time"].indexOf(this._currentTag.type) !== -1;
             this.inputElement.setAttribute("type", isInputSpecificType ? this._currentTag.type : "input");
             clearTimeout(this.errorTimer);
             this.el.removeAttribute("error");
@@ -4515,7 +4523,7 @@ var cf;
         };
         // override
         UserTextInput.prototype.getTemplate = function () {
-            return this.customTemplate || "<cf-input>\n\t\t\t\t<cf-info></cf-info>\n\t\t\t\t<cf-input-control-elements>\n\t\t\t\t\t<cf-list-button direction=\"prev\">\n\t\t\t\t\t</cf-list-button>\n\t\t\t\t\t<cf-list-button direction=\"next\">\n\t\t\t\t\t</cf-list-button>\n\t\t\t\t\t<cf-list>\n\t\t\t\t\t</cf-list>\n\t\t\t\t</cf-input-control-elements>\n\n\t\t\t\t<textarea type='input' tabindex=\"1\" rows=\"1\"></textarea>\n\n\t\t\t</cf-input>\n\t\t\t";
+            return this.customTemplate || "<cf-input>\n\t\t\t\t<cf-info></cf-info>\n\t\t\t\t<cf-input-control-elements>\n\t\t\t\t\t<cf-list-button direction=\"prev\">\n\t\t\t\t\t</cf-list-button>\n\t\t\t\t\t<cf-list-button direction=\"next\">\n\t\t\t\t\t</cf-list-button>\n\t\t\t\t\t<cf-list>\n\t\t\t\t\t</cf-list>\n\t\t\t\t</cf-input-control-elements>\n\n\t\t\t\t<textarea type='input' tabindex=\"1\" rows=\"1\"></textarea>\n\t\t\t</cf-input>\n\t\t\t";
         };
         return UserTextInput;
     }(cf.UserInputElement));

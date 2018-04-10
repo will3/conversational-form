@@ -23,7 +23,18 @@
 
 		conversationalForm.addTags([{
 			tag: "input",
-			"cf-questions": "Date mask?"
+			type: "date",
+			"cf-questions": "Date?"
+		},
+		{
+			tag: "input",
+			type: "datetime-local",
+			"cf-questions": "Date time?"
+		},
+		{
+			tag: "input",
+			type: "time",
+			"cf-questions": "Time?"
 		}]);
 
 		conversationalForm.remapTagsAndStartFrom();
