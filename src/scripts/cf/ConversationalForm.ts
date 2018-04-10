@@ -331,8 +331,8 @@ namespace cf {
 			}
 		}
 
-		public addRobotChatResponse(response: string){
-			this.chatList.createResponse(true, null, response);
+		public addRobotChatResponse(response: string, attachment: IChatAttachment){
+			this.chatList.createResponse(true, null, response, attachment);
 		}
 
 		public addUserChatResponse(response: string){

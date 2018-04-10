@@ -488,7 +488,7 @@ var cf;
                 throw new Error("this.eventTarget not set!! : " + this.constructor.name);
             this.setData(options);
             this.createElement();
-            this.onElementCreated();
+            this.onElementCreated(options);
         }
         BasicElement.prototype.setData = function (options) {
         };
@@ -4559,6 +4559,10 @@ var cf;
             _this.container = options.container;
             _this.uiOptions = options.cfReference.uiOptions;
             _this._tag = options.tag;
+            _this.attachment = options.attachment;
+            if (_this.attachment != null) {
+                _this.attachment.start(_this.el);
+            }
             return _this;
         }
         Object.defineProperty(ChatResponse.prototype, "tag", {
@@ -5098,8 +5102,9 @@ var cf;
                 }
             }
         };
-        ChatList.prototype.createResponse = function (isRobotResponse, currentTag, value) {
+        ChatList.prototype.createResponse = function (isRobotResponse, currentTag, value, attachment) {
             if (value === void 0) { value = null; }
+            if (attachment === void 0) { attachment = null; }
             var scrollable = this.el.querySelector("scrollable");
             var response = new cf.ChatResponse({
                 // image: null,
@@ -5110,7 +5115,8 @@ var cf;
                 isRobotResponse: isRobotResponse,
                 response: value,
                 image: isRobotResponse ? cf.Dictionary.getRobotResponse("robot-image") : cf.Dictionary.get("user-image"),
-                container: scrollable
+                container: scrollable,
+                attachment: attachment
             });
             this.responses.push(response);
             this.currentResponse = response;
@@ -5615,8 +5621,8 @@ var cf;
                 return formData;
             }
         };
-        ConversationalForm.prototype.addRobotChatResponse = function (response) {
-            this.chatList.createResponse(true, null, response);
+        ConversationalForm.prototype.addRobotChatResponse = function (response, attachment) {
+            this.chatList.createResponse(true, null, response, attachment);
         };
         ConversationalForm.prototype.addUserChatResponse = function (response) {
             // add a "fake" user response..

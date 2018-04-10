@@ -5,6 +5,10 @@
 
 // namespace
 namespace cf {
+	export interface IChatAttachment {
+		start(el: HTMLElement) : void;
+	}
+
 	// interface
 	export interface IChatResponseOptions extends IBasicElementOptions{
 		response: string;
@@ -13,6 +17,7 @@ namespace cf {
 		isRobotResponse: boolean;
 		tag: ITag;
 		container: HTMLElement;
+		attachment: IChatAttachment;
 	}
 
 	export const ChatResponseEvents = {
@@ -29,9 +34,10 @@ namespace cf {
 		public response: string;
 		public originalResponse: string; // keep track of original response with id pipings
 		public parsedResponse: string;
+		private attachment: IChatAttachment;
 		
 		private uiOptions: IUserInterfaceOptions;
-		private textEl: Element;
+		private textEl: SVGTextElement;
 		private image: string;
 		private container: HTMLElement;
 		private _tag: ITag;
@@ -78,6 +84,11 @@ namespace cf {
 			this.container = options.container;
 			this.uiOptions = options.cfReference.uiOptions;
 			this._tag = options.tag;
+			this.attachment = options.attachment;
+
+			if (this.attachment != null) {
+				this.attachment.start(this.el);
+			}
 		}
 
 		public whenReady(resolve: () => void){
@@ -338,7 +349,7 @@ namespace cf {
 			super.setData(options);
 		}
 		protected onElementCreated(){
-			this.textEl = <Element> this.el.getElementsByTagName("text")[0];
+			this.textEl = <SVGTextElement> this.el.getElementsByTagName("text")[0];
 
 			this.updateThumbnail(this.image);
 

@@ -271,7 +271,7 @@ namespace cf {
 			}
 		}
 
-		public createResponse(isRobotResponse: boolean, currentTag: ITag, value: string = null) : ChatResponse{
+		public createResponse(isRobotResponse: boolean, currentTag: ITag, value: string = null, attachment: IChatAttachment = null) : ChatResponse{
 			const scrollable: HTMLElement = <HTMLElement> this.el.querySelector("scrollable");
 			const response: ChatResponse = new ChatResponse({
 				// image: null,
@@ -282,7 +282,8 @@ namespace cf {
 				isRobotResponse: isRobotResponse,
 				response: value,
 				image: isRobotResponse ? Dictionary.getRobotResponse("robot-image") : Dictionary.get("user-image"),
-				container: scrollable
+				container: scrollable,
+				attachment: attachment
 			});
 
 			this.responses.push(response);
