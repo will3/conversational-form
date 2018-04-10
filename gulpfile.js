@@ -36,7 +36,7 @@ global.gulp.task('watch', tasks, function() {
 
 	global.gulp.watch(srcFolder + '/images/**/*', ['copy-images']);
 
-	global.gulp.watch(srcFolder + '/scripts/**/*.ts', ['typescript-form']);
+	global.gulp.watch(srcFolder + '/scripts/**/*.ts', ['scripts-form-build']);
 	global.gulp.watch(srcFolder + '/scripts/cf/**/*.js', ['scripts-form-build']);
 	
 	global.gulp.watch(srcFolder + '/styles/**/*.scss', ['sass-form']);
