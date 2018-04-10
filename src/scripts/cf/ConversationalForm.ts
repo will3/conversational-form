@@ -335,6 +335,10 @@ namespace cf {
 			this.chatList.createResponse(true, null, response, attachment);
 		}
 
+		public showThinking() {
+			this.chatList.showThinking(true, null);
+		}
+
 		public addUserChatResponse(response: string){
 			// add a "fake" user response..
 			this.chatList.createResponse(false, null, response);

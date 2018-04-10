@@ -6,6 +6,7 @@ namespace cf {
 	export interface IBasicElementOptions{
 		eventTarget: EventDispatcher;
 		cfReference?: ConversationalForm,
+		uiOptions?: IUserInterfaceOptions,
 		// set a custom template
 		customTemplate?: string
 	}

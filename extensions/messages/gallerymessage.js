@@ -1,4 +1,4 @@
-class Gallery {
+class GalleryMessage {
 	constructor(options) {
 		this.cards = options.cards || [];
 	}
@@ -21,4 +21,4 @@ class Gallery {
 	}
 }
 
-module.exports = Gallery;
+module.exports = GalleryMessage;

@@ -1,5 +1,7 @@
-const Card = require('./card');
-const Gallery = require('./gallery');
+const CardMessage = require('./messages/cardmessage');
+const GalleryMessage = require('./messages/gallerymessage');
+const VideoMessage = require('./messages/videomessage');
+const AudioMessage = require('./messages/audiomessage');
 
 const conversationalForm = cf.ConversationalForm.startTheConversation({
   formEl: document.getElementById("form"),
@@ -11,22 +13,27 @@ const conversationalForm = cf.ConversationalForm.startTheConversation({
   }
 });
 
+function init() {
+
 conversationalForm.addTags([
-// {
-// 	tag: "input",
-// 	type: "date",
-// 	"cf-questions": "Date?"
-// },
-// {
-// 	tag: "input",
-// 	type: "datetime-local",
-// 	"cf-questions": "Date time?"
-// },
-// {
-// 	tag: "input",
-// 	type: "time",
-// 	"cf-questions": "Time?"
-// },
+{
+	tag: "input",
+	type: "date",
+	"cf-questions": "Date?"
+},
+{
+	tag: "input",
+	type: "datetime-local",
+	"cf-questions": "Date time?"
+},
+{
+	tag: "input",
+	type: "time",
+	"cf-questions": "Time?"
+}
+]);
+
+conversationalForm.addTags([
 {
 	tag: "fieldset",
 	type: "Radio buttons",
@@ -47,13 +54,11 @@ conversationalForm.addTags([
 }
 ]);
 
-// "tag": "fieldset",
-//     "type": "Radio buttons",
-//     ]
-
 conversationalForm.remapTagsAndStartFrom();
 
-const card = new Card({
+conversationalForm.showThinking();
+
+const card = new CardMessage({
 	title: 'title',
 	detail: 'detail',
 	image: 'http://via.placeholder.com/350x150',
@@ -72,12 +77,24 @@ const card = new Card({
 
 conversationalForm.addRobotChatResponse('card', card);
 
-const gallery = new Gallery({
+const gallery = new GalleryMessage({
 	cards: [ card, card ]
 });
 
 conversationalForm.addRobotChatResponse('gallery', gallery);
 
+
+const video = new VideoMessage({
+	source: 'http://techslides.com/demos/sample-videos/small.mp4'
+});
+
+conversationalForm.addRobotChatResponse('video', video);
+
+const audio = new AudioMessage({
+	source: 'https://raw.githubusercontent.com/anars/blank-audio/master/10-minutes-of-silence.mp3'
+});
+
+conversationalForm.addRobotChatResponse('audio', audio);
 
 // DONE
 // 
@@ -101,3 +118,7 @@ conversationalForm.addRobotChatResponse('gallery', gallery);
 // Delay
 // Progress
 // Results
+
+};
+
+init();

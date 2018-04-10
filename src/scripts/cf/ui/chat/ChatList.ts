@@ -295,6 +295,57 @@ namespace cf {
 			return response;
 		}
 
+		private deepClone(obj : any) : any {
+			if (obj === null) {
+				return null;
+			}
+			if (obj === undefined) {
+				return undefined;
+			}
+			var copy = <any> {};
+			const keys = Object.keys(obj);
+			for (var i = 0; i < keys.length; i ++) {
+				const key = keys[i];
+				const value = <any> obj[key];
+				if (typeof value === 'object') {
+					copy[key] = this.deepClone(value);
+				} else {
+					copy[key] = value;
+				}
+			}
+			return copy;
+		}
+
+		public showThinking(isRobotResponse: boolean, currentTag: ITag) {
+			const value = "oh no";
+
+			const uiOptions = this.deepClone(this.cfReference.uiOptions);
+      uiOptions.robot.robotResponseTime = 3000;
+
+			const scrollable: HTMLElement = <HTMLElement> this.el.querySelector("scrollable");
+			const response: ChatResponse = new ChatResponse({
+				// image: null,
+				cfReference: this.cfReference,
+				uiOptions: uiOptions,
+				list: this,
+				tag: currentTag,
+				eventTarget: this.eventTarget,
+				isRobotResponse: isRobotResponse,
+				response: value,
+				image: isRobotResponse ? Dictionary.getRobotResponse("robot-image") : Dictionary.get("user-image"),
+				container: scrollable,
+				attachment: null
+			});
+
+			this.responses.push(response);
+
+			this.currentResponse = response;
+
+			this.onListUpdate(response);
+
+			return response;
+		}
+
 		public getTemplate () : string {
 			return `<cf-chat type='pluto'>
 						<scrollable></scrollable>

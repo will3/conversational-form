@@ -488,7 +488,7 @@ var cf;
                 throw new Error("this.eventTarget not set!! : " + this.constructor.name);
             this.setData(options);
             this.createElement();
-            this.onElementCreated(options);
+            this.onElementCreated();
         }
         BasicElement.prototype.setData = function (options) {
         };
@@ -4557,7 +4557,7 @@ var cf;
             var _this = _super.call(this, options) || this;
             _this.readyTimer = 0;
             _this.container = options.container;
-            _this.uiOptions = options.cfReference.uiOptions;
+            _this.uiOptions = options.uiOptions || options.cfReference.uiOptions;
             _this._tag = options.tag;
             _this.attachment = options.attachment;
             if (_this.attachment != null) {
@@ -4794,13 +4794,13 @@ var cf;
             }
         };
         ChatResponse.prototype.setToThinking = function () {
-            var canShowThinking = (this.isRobotResponse && this.uiOptions.robot.robotResponseTime !== 0) || (!this.isRobotResponse && this.cfReference.uiOptions.user.showThinking && !this._tag.skipUserInput);
+            var canShowThinking = (this.isRobotResponse && this.uiOptions.robot.robotResponseTime !== 0) || (!this.isRobotResponse && this.uiOptions.user.showThinking && !this._tag.skipUserInput);
             if (canShowThinking) {
                 this.textEl.innerHTML = ChatResponse.THINKING_MARKUP;
                 this.el.classList.remove("can-edit");
                 this.el.setAttribute("thinking", "");
             }
-            if (this.cfReference.uiOptions.user.showThinking || this.cfReference.uiOptions.user.showThumb) {
+            if (this.uiOptions.user.showThinking || this.uiOptions.user.showThumb) {
                 this.addSelf();
             }
         };
@@ -5117,6 +5117,50 @@ var cf;
                 image: isRobotResponse ? cf.Dictionary.getRobotResponse("robot-image") : cf.Dictionary.get("user-image"),
                 container: scrollable,
                 attachment: attachment
+            });
+            this.responses.push(response);
+            this.currentResponse = response;
+            this.onListUpdate(response);
+            return response;
+        };
+        ChatList.prototype.deepClone = function (obj) {
+            if (obj === null) {
+                return null;
+            }
+            if (obj === undefined) {
+                return undefined;
+            }
+            var copy = {};
+            var keys = Object.keys(obj);
+            for (var i = 0; i < keys.length; i++) {
+                var key = keys[i];
+                var value = obj[key];
+                if (typeof value === 'object') {
+                    copy[key] = this.deepClone(value);
+                }
+                else {
+                    copy[key] = value;
+                }
+            }
+            return copy;
+        };
+        ChatList.prototype.showThinking = function (isRobotResponse, currentTag) {
+            var value = "oh no";
+            var uiOptions = this.deepClone(this.cfReference.uiOptions);
+            uiOptions.robot.robotResponseTime = 3000;
+            var scrollable = this.el.querySelector("scrollable");
+            var response = new cf.ChatResponse({
+                // image: null,
+                cfReference: this.cfReference,
+                uiOptions: uiOptions,
+                list: this,
+                tag: currentTag,
+                eventTarget: this.eventTarget,
+                isRobotResponse: isRobotResponse,
+                response: value,
+                image: isRobotResponse ? cf.Dictionary.getRobotResponse("robot-image") : cf.Dictionary.get("user-image"),
+                container: scrollable,
+                attachment: null
             });
             this.responses.push(response);
             this.currentResponse = response;
@@ -5623,6 +5667,9 @@ var cf;
         };
         ConversationalForm.prototype.addRobotChatResponse = function (response, attachment) {
             this.chatList.createResponse(true, null, response, attachment);
+        };
+        ConversationalForm.prototype.showThinking = function () {
+            this.chatList.showThinking(true, null);
         };
         ConversationalForm.prototype.addUserChatResponse = function (response) {
             // add a "fake" user response..

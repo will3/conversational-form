@@ -1,4 +1,4 @@
-class Card {
+class CardMessage {
 	constructor(options) {
 		options = options || {};
 		this.title = options.title || '';
@@ -46,4 +46,4 @@ class Card {
 	}
 };
 
-module.exports = Card;
+module.exports = CardMessage;
