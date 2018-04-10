@@ -5670,7 +5670,7 @@ var cf;
                         // remove the tags as they are now apart of a group
                         for (var i = 0; i < groups[group].length; i++) {
                             var tagToBeRemoved = groups[group][i];
-                            if (i == 0)
+                            if (i == 0) // add the group at same index as the the first tag to be removed
                                 tags.splice(tags.indexOf(tagToBeRemoved), 1, tagGroup);
                             else
                                 tags.splice(tags.indexOf(tagToBeRemoved), 1);

@@ -644,7 +644,6 @@ namespace cf {
 				</cf-input-control-elements>
 
 				<textarea type='input' tabindex="1" rows="1"></textarea>
-
 			</cf-input>
 			`;
 		}

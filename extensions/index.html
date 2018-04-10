@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Conversational Form Extensions</title>
+	<script type="text/javascript" src="../dist/conversational-form.js"></script>
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+	<div id='cf-context'/>
+	<form id="form">
+	</form>
+	<script type="text/javascript">
+		const conversationalForm = cf.ConversationalForm.startTheConversation({
+      formEl: document.getElementById("form"),
+      context: document.getElementById("cf-context"),
+      flowStepCallback: (dto, success, error) => {
+          success();
+      },
+      submitCallback: () => {
+      }
+    });
+
+		conversationalForm.addTags([{
+			tag: "input",
+			"cf-questions": "Date mask?"
+		}]);
+
+		conversationalForm.remapTagsAndStartFrom();
+
+		// Date mask
+		// Date time mask
+		// Time mask
+		// Location
+		// Image Capture
+		// Video Capture
+		// Audio Capture
+		// 
+		// Image Message
+		// Card Message
+		// Text Card
+		// Gallery
+		// Video
+		// Audio
+		// Document
+		// Delay
+		// Progress
+		// Results
+	</script>
+</body>
+</html>
