@@ -18,24 +18,49 @@
           success();
       },
       submitCallback: () => {
+      	conversationalForm.addRobotChatResponse('test');
       }
     });
 
-		conversationalForm.addTags([{
-			tag: "input",
-			type: "date",
-			"cf-questions": "Date?"
-		},
+		conversationalForm.addTags([
+		// {
+		// 	tag: "input",
+		// 	type: "date",
+		// 	"cf-questions": "Date?"
+		// },
+		// {
+		// 	tag: "input",
+		// 	type: "datetime-local",
+		// 	"cf-questions": "Date time?"
+		// },
+		// {
+		// 	tag: "input",
+		// 	type: "time",
+		// 	"cf-questions": "Time?"
+		// },
 		{
-			tag: "input",
-			type: "datetime-local",
-			"cf-questions": "Date time?"
-		},
-		{
-			tag: "input",
-			type: "time",
-			"cf-questions": "Time?"
-		}]);
+			tag: "fieldset",
+			type: "Radio buttons",
+      "cf-questions": "Share your location?",
+			"children":[
+			{
+			"tag": "input",
+			"type": "radio",
+			"name": "radio-buttons-1",
+			"cf-label": "Yes"
+			},
+			{
+			"tag": "input",
+			"type": "radio",
+			"name": "radio-buttons-1",
+			"cf-label": "No"
+			}]
+		}
+		]);
+
+		// "tag": "fieldset",
+  //     "type": "Radio buttons",
+  //     ]
 
 		conversationalForm.remapTagsAndStartFrom();
 
