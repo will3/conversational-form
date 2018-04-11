@@ -316,11 +316,9 @@ namespace cf {
 			return copy;
 		}
 
-		public showThinking(isRobotResponse: boolean, currentTag: ITag) {
-			const value = "oh no";
-
+		public showThinking() {
 			const uiOptions = this.deepClone(this.cfReference.uiOptions);
-      uiOptions.robot.robotResponseTime = 3000;
+      uiOptions.robot.robotResponseTime = 3600000;
 
 			const scrollable: HTMLElement = <HTMLElement> this.el.querySelector("scrollable");
 			const response: ChatResponse = new ChatResponse({
@@ -328,11 +326,11 @@ namespace cf {
 				cfReference: this.cfReference,
 				uiOptions: uiOptions,
 				list: this,
-				tag: currentTag,
+				tag: null,
 				eventTarget: this.eventTarget,
-				isRobotResponse: isRobotResponse,
-				response: value,
-				image: isRobotResponse ? Dictionary.getRobotResponse("robot-image") : Dictionary.get("user-image"),
+				isRobotResponse: true,
+				response: '...',
+				image: Dictionary.getRobotResponse("robot-image"),
 				container: scrollable,
 				attachment: null
 			});

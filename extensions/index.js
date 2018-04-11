@@ -83,9 +83,8 @@ const gallery = new GalleryMessage({
 
 conversationalForm.addRobotChatResponse('gallery', gallery);
 
-
 const video = new VideoMessage({
-	source: 'http://techslides.com/demos/sample-videos/small.mp4'
+	source: 'https://vjs.zencdn.net/v/oceans.mp4'
 });
 
 conversationalForm.addRobotChatResponse('video', video);
@@ -122,3 +121,7 @@ conversationalForm.addRobotChatResponse('audio', audio);
 };
 
 init();
+
+audiojs.events.ready(function() {
+  var as = audiojs.createAll();
+});

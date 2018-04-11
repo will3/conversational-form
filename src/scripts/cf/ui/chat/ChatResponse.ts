@@ -246,7 +246,7 @@ namespace cf {
 						// reset, as it can be called again
 						this.onReadyCallback = null;
 
-						if(this._tag.skipUserInput === true){
+						if(this._tag != null && this._tag.skipUserInput === true){
 							setTimeout(() =>{
 								this._tag.flowManager.nextStep()
 							},this.uiOptions.robot.chainedResponseTime);

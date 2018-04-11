@@ -336,7 +336,7 @@ namespace cf {
 		}
 
 		public showThinking() {
-			this.chatList.showThinking(true, null);
+			this.chatList.showThinking();
 		}
 
 		public addUserChatResponse(response: string){

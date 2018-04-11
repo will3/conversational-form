@@ -4745,7 +4745,7 @@ var cf;
                         _this.onReadyCallback();
                     // reset, as it can be called again
                     _this.onReadyCallback = null;
-                    if (_this._tag.skipUserInput === true) {
+                    if (_this._tag != null && _this._tag.skipUserInput === true) {
                         setTimeout(function () {
                             _this._tag.flowManager.nextStep();
                         }, _this.uiOptions.robot.chainedResponseTime);
@@ -5144,21 +5144,20 @@ var cf;
             }
             return copy;
         };
-        ChatList.prototype.showThinking = function (isRobotResponse, currentTag) {
-            var value = "oh no";
+        ChatList.prototype.showThinking = function () {
             var uiOptions = this.deepClone(this.cfReference.uiOptions);
-            uiOptions.robot.robotResponseTime = 3000;
+            uiOptions.robot.robotResponseTime = 3600000;
             var scrollable = this.el.querySelector("scrollable");
             var response = new cf.ChatResponse({
                 // image: null,
                 cfReference: this.cfReference,
                 uiOptions: uiOptions,
                 list: this,
-                tag: currentTag,
+                tag: null,
                 eventTarget: this.eventTarget,
-                isRobotResponse: isRobotResponse,
-                response: value,
-                image: isRobotResponse ? cf.Dictionary.getRobotResponse("robot-image") : cf.Dictionary.get("user-image"),
+                isRobotResponse: true,
+                response: '...',
+                image: cf.Dictionary.getRobotResponse("robot-image"),
                 container: scrollable,
                 attachment: null
             });
@@ -5669,7 +5668,7 @@ var cf;
             this.chatList.createResponse(true, null, response, attachment);
         };
         ConversationalForm.prototype.showThinking = function () {
-            this.chatList.showThinking(true, null);
+            this.chatList.showThinking();
         };
         ConversationalForm.prototype.addUserChatResponse = function (response) {
             // add a "fake" user response..

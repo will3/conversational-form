@@ -85,3 +85,7 @@ cf-chat-response.cf-attachment {
 .cfx-video {
 	
 }
+
+.audiojs .play-pause {
+	box-sizing: initial;
+}

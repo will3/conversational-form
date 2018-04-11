@@ -8,14 +8,21 @@ class VideoMessage {
 	start(div) {
 		div.classList.add("cf-attachment");
 
+		const video = $(`
+			<video class="video-js vjs-default-skin"
+				autoplay=${this.autoplay ? 1 : 0}>
+				<source src=${this.source}> 
+			</video>`);
+		
 		const element = $(`
 			<div class='cfx-video cfx-vertical-margin'>
-			<video controls autoplay=${this.autoplay}>
-				<source src=${this.source}> 
-			</video>
 			</div>`);
 
+		element.append(video);
+
 		$(div).append(element);
+
+		var player = videojs(video[0]);
 	}
 }
 
