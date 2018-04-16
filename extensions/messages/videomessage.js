@@ -7,8 +7,7 @@ class VideoMessage {
 
 	start(div) {
 		const video = $(`
-			<video class="video-js vjs-default-skin"
-				autoplay=${this.autoplay ? 1 : 0}>
+			<video class="video-js vjs-default-skin">
 				<source src=${this.source}> 
 			</video>`);
 		
@@ -20,7 +19,9 @@ class VideoMessage {
 
 		$(div).append(element);
 
-		var player = videojs(video[0]);
+		var player = videojs(video[0], {
+			controls: true,
+		});
 	}
 }
 
