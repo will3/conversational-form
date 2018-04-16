@@ -4727,14 +4727,16 @@ var cf;
                 var chainedResponses = innerResponse.split("&&");
                 var _loop_1 = function (i_2) {
                     var str = chainedResponses[i_2];
-                    setTimeout(function () {
-                        _this.tryClearThinking();
-                        _this.textEl.innerHTML += "<p>" + str + "</p>";
-                        var p = _this.textEl.getElementsByTagName("p");
-                        p[p.length - 1].offsetWidth;
-                        p[p.length - 1].classList.add("show");
-                        _this.scrollTo();
-                    }, robotInitResponseTime + ((i_2 + 1) * this_1.uiOptions.robot.chainedResponseTime));
+                    if (robotInitResponseTime != Infinity) {
+                        setTimeout(function () {
+                            _this.tryClearThinking();
+                            _this.textEl.innerHTML += "<p>" + str + "</p>";
+                            var p = _this.textEl.getElementsByTagName("p");
+                            p[p.length - 1].offsetWidth;
+                            p[p.length - 1].classList.add("show");
+                            _this.scrollTo();
+                        }, robotInitResponseTime + ((i_2 + 1) * this_1.uiOptions.robot.chainedResponseTime));
+                    }
                 };
                 var this_1 = this;
                 for (var i_2 = 0; i_2 < chainedResponses.length; i_2++) {
@@ -5102,13 +5104,18 @@ var cf;
                 }
             }
         };
-        ChatList.prototype.createResponse = function (isRobotResponse, currentTag, value, attachment) {
+        ChatList.prototype.createResponse = function (isRobotResponse, currentTag, value, attachment, responseTime) {
             if (value === void 0) { value = null; }
             if (attachment === void 0) { attachment = null; }
+            if (responseTime === void 0) { responseTime = null; }
+            responseTime = responseTime || this.cfReference.uiOptions.robot.robotResponseTime;
             var scrollable = this.el.querySelector("scrollable");
+            var uiOptions = this.deepClone(this.cfReference.uiOptions);
+            uiOptions.robot.robotResponseTime = responseTime;
             var response = new cf.ChatResponse({
                 // image: null,
                 cfReference: this.cfReference,
+                uiOptions: uiOptions,
                 list: this,
                 tag: currentTag,
                 eventTarget: this.eventTarget,
@@ -5143,28 +5150,6 @@ var cf;
                 }
             }
             return copy;
-        };
-        ChatList.prototype.showThinking = function () {
-            var uiOptions = this.deepClone(this.cfReference.uiOptions);
-            uiOptions.robot.robotResponseTime = 3600000;
-            var scrollable = this.el.querySelector("scrollable");
-            var response = new cf.ChatResponse({
-                // image: null,
-                cfReference: this.cfReference,
-                uiOptions: uiOptions,
-                list: this,
-                tag: null,
-                eventTarget: this.eventTarget,
-                isRobotResponse: true,
-                response: '...',
-                image: cf.Dictionary.getRobotResponse("robot-image"),
-                container: scrollable,
-                attachment: null
-            });
-            this.responses.push(response);
-            this.currentResponse = response;
-            this.onListUpdate(response);
-            return response;
         };
         ChatList.prototype.getTemplate = function () {
             return "<cf-chat type='pluto'>\n\t\t\t\t\t\t<scrollable></scrollable>\n\t\t\t\t\t</cf-chat>";
@@ -5664,11 +5649,11 @@ var cf;
                 return formData;
             }
         };
-        ConversationalForm.prototype.addRobotChatResponse = function (response, attachment) {
-            this.chatList.createResponse(true, null, response, attachment);
+        ConversationalForm.prototype.addMessage = function (params) {
+            this.chatList.createResponse(params.isRobot, null, params.response, params.attachment, params.responseTime);
         };
-        ConversationalForm.prototype.showThinking = function () {
-            this.chatList.showThinking();
+        ConversationalForm.prototype.addRobotChatResponse = function (response) {
+            this.chatList.createResponse(true, null, response);
         };
         ConversationalForm.prototype.addUserChatResponse = function (response) {
             // add a "fake" user response..
@@ -5819,6 +5804,9 @@ var cf;
                             tags.push(tagElement);
                         }
                     }
+                }
+                else if (tagData.tag === "virtual") {
+                    tags.push(new cf_1.Tag({}));
                 }
                 else {
                     var tag = tagData.tag === "select" ? cf_1.TagsParser.parseGroupTag(tagData) : cf_1.TagsParser.parseTag(tagData);

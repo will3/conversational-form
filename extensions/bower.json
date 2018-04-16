@@ -14,5 +14,8 @@
     "build/bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "glyphicons-only-bootstrap": "^0.0.1"
+  }
 }

@@ -271,11 +271,17 @@ namespace cf {
 			}
 		}
 
-		public createResponse(isRobotResponse: boolean, currentTag: ITag, value: string = null, attachment: IChatAttachment = null) : ChatResponse{
+		public createResponse(isRobotResponse: boolean, currentTag: ITag, value: string = null, attachment: IChatAttachment = null, responseTime: number = null) : ChatResponse{
+			responseTime = responseTime || this.cfReference.uiOptions.robot.robotResponseTime;
+
 			const scrollable: HTMLElement = <HTMLElement> this.el.querySelector("scrollable");
+			const uiOptions = this.deepClone(this.cfReference.uiOptions);
+      uiOptions.robot.robotResponseTime = responseTime;
+      
 			const response: ChatResponse = new ChatResponse({
 				// image: null,
 				cfReference: this.cfReference,
+				uiOptions: uiOptions,
 				list: this,
 				tag: currentTag,
 				eventTarget: this.eventTarget,
@@ -314,34 +320,6 @@ namespace cf {
 				}
 			}
 			return copy;
-		}
-
-		public showThinking() {
-			const uiOptions = this.deepClone(this.cfReference.uiOptions);
-      uiOptions.robot.robotResponseTime = 3600000;
-
-			const scrollable: HTMLElement = <HTMLElement> this.el.querySelector("scrollable");
-			const response: ChatResponse = new ChatResponse({
-				// image: null,
-				cfReference: this.cfReference,
-				uiOptions: uiOptions,
-				list: this,
-				tag: null,
-				eventTarget: this.eventTarget,
-				isRobotResponse: true,
-				response: '...',
-				image: Dictionary.getRobotResponse("robot-image"),
-				container: scrollable,
-				attachment: null
-			});
-
-			this.responses.push(response);
-
-			this.currentResponse = response;
-
-			this.onListUpdate(response);
-
-			return response;
 		}
 
 		public getTemplate () : string {

@@ -1,10 +1,11 @@
+// TODO user gallery not aligned properly
 class GalleryMessage {
 	constructor(options) {
 		this.cards = options.cards || [];
 	}
 
 	start(div) {
-		div.classList.add("cf-attachment");
+		div.classList.add("cf-nested-scroll");
 		const element = $(`<div class='cfx-gallery cfx-vertical-margin'>
 			<div class='cfx-gallery-content'></div>
 			</div>`);

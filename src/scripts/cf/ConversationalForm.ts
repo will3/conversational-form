@@ -16,6 +16,16 @@
 interface Window { ConversationalForm: any; }
 
 namespace cf {
+	export interface AddResponseParams {
+		isRobot: boolean;
+		response: string;
+		attachment: IChatAttachment;
+		responseTime: number;
+	}
+
+	export interface AddQuestionParams {
+		tag?: DataTag
+	}
 
 	// CUI options
 	export interface ConversationalFormOptions{
@@ -331,12 +341,12 @@ namespace cf {
 			}
 		}
 
-		public addRobotChatResponse(response: string, attachment: IChatAttachment){
-			this.chatList.createResponse(true, null, response, attachment);
+		public addMessage(params: AddResponseParams) {
+			this.chatList.createResponse(params.isRobot, null, params.response, params.attachment, params.responseTime);
 		}
 
-		public showThinking() {
-			this.chatList.showThinking();
+		public addRobotChatResponse(response: string,){
+			this.chatList.createResponse(true, null, response);
 		}
 
 		public addUserChatResponse(response: string){
@@ -517,6 +527,8 @@ namespace cf {
 							tags.push(tagElement);
 						}
 					}
+				}else if(tagData.tag === "virtual"){
+					tags.push(new Tag({}));
 				}else{
 					let tag: HTMLElement | HTMLInputElement | HTMLSelectElement | HTMLButtonElement = tagData.tag === "select" ? TagsParser.parseGroupTag(tagData) : TagsParser.parseTag(tagData);
 					if(Tag.isTagValid(tag)){

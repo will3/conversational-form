@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "watchify index.js -o bundle.js --debug --verbose",
+    "start": "chmod 775 ./start.sh; ./start.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "watchify": "^3.11.0"
+  },
+  "dependencies": {
+    "videojs-record": "^2.1.3"
   }
 }

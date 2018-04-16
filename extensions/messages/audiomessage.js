@@ -6,8 +6,6 @@ class AudioMessage {
 	}
 
 	start(div) {
-		div.classList.add("cf-attachment");
-
 		const audio = $(`
 			<audio preload="auto" 
 				autoplay=${this.autoplay ? 1 : 0}>

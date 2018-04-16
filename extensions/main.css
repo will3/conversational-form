@@ -71,7 +71,7 @@ scrollable {
 	overflow-x: hidden;
 }
 
-cf-chat-response.cf-attachment {
+cf-chat-response.cf-nested-scroll {
 	overflow-x: hidden;	
 	display: block;
 	max-width: 100%;
@@ -88,4 +88,10 @@ cf-chat-response.cf-attachment {
 
 .audiojs .play-pause {
 	box-sizing: initial;
+}
+
+.cfx-button-rounded {
+	border-radius: 16px;
+	overflow: hidden;
+	border: 1px solid #0084ff;
 }

@@ -227,16 +227,18 @@ namespace cf {
 					var chainedResponses: Array<string> = innerResponse.split("&&");
 					for (let i = 0; i < chainedResponses.length; i++) {
 						let str: string = <string>chainedResponses[i];
-						setTimeout(() =>{
-							this.tryClearThinking();
+						if (robotInitResponseTime != Infinity) {
+							setTimeout(() =>{
+								this.tryClearThinking();
 
-							this.textEl.innerHTML += "<p>" + str + "</p>";
-							const p: NodeListOf<HTMLElement> = this.textEl.getElementsByTagName("p");
-							p[p.length - 1].offsetWidth;
-							p[p.length - 1].classList.add("show");
+								this.textEl.innerHTML += "<p>" + str + "</p>";
+								const p: NodeListOf<HTMLElement> = this.textEl.getElementsByTagName("p");
+								p[p.length - 1].offsetWidth;
+								p[p.length - 1].classList.add("show");
 
-							this.scrollTo();
-						}, robotInitResponseTime + ((i + 1) * this.uiOptions.robot.chainedResponseTime));
+								this.scrollTo();
+							}, robotInitResponseTime + ((i + 1) * this.uiOptions.robot.chainedResponseTime));	
+						}
 					}
 
 					this.readyTimer = setTimeout(() => {

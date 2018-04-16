@@ -6,8 +6,6 @@ class VideoMessage {
 	}
 
 	start(div) {
-		div.classList.add("cf-attachment");
-
 		const video = $(`
 			<video class="video-js vjs-default-skin"
 				autoplay=${this.autoplay ? 1 : 0}>

@@ -12,10 +12,6 @@ class CardMessage {
 	}
 
 	buildElement(div, isAttachment) {
-		if (isAttachment) {
-			div.classList.add("cf-attachment");	
-		}
-
 		const element = $(
 		`<div class='cfx-card'>
 			<div class='cfx-card-image cfx-bottom-line'>
