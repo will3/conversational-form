@@ -362,7 +362,11 @@ namespace cf {
 				this.buildControlElements([this._currentTag]);
 			}
 
-			if(this._currentTag.type == "text" || this._currentTag.type == "email"){
+			if(this._currentTag.type == "text" ||
+				this._currentTag.type == "email" ||
+				this._currentTag.type == "date" || 
+				this._currentTag.type == "datetime-local" || 
+				this._currentTag.type == "time"){
 				this.inputElement.value = this._currentTag.defaultValue.toString();
 			}
 
