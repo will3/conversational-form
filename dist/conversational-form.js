@@ -4565,7 +4565,13 @@ var cf;
             _this._tag = options.tag;
             _this.attachment = options.attachment;
             if (_this.attachment != null) {
-                _this.attachment.start(_this.el);
+                var div = document.createElement("div");
+                div.classList.add("vertical-margin");
+                _this.el.appendChild(div);
+                _this.attachment.start(div);
+            }
+            if (_this.response == null) {
+                _this.el.children[1].remove();
             }
             return _this;
         }
@@ -4679,9 +4685,9 @@ var cf;
         };
         ChatResponse.prototype.processResponseAndSetText = function () {
             var _this = this;
-            if (!this.originalResponse)
+            if (!this.originalResponse && !this.attachment)
                 return;
-            var innerResponse = this.originalResponse;
+            var innerResponse = this.originalResponse || '';
             if (this._tag && this._tag.type == "password" && !this.isRobotResponse) {
                 var newStr = "";
                 for (var i_1 = 0; i_1 < innerResponse.length; i_1++) {
@@ -4867,7 +4873,7 @@ var cf;
         };
         // template, can be overwritten ...
         ChatResponse.prototype.getTemplate = function () {
-            return "<cf-chat-response class=\"" + (this.isRobotResponse ? "robot" : "user") + "\">\n\t\t\t\t<thumb><span></span></thumb>\n\t\t\t\t<text></text>\n\t\t\t</cf-chat-response>";
+            return "<cf-chat-response class=\"" + (this.isRobotResponse ? "robot" : "user") + "\">\n\t\t\t\t<thumb><span></span></thumb>\n\t\t\t\t<text class=\"chat-response-text\"></text>\n\t\t\t</cf-chat-response>";
         };
         ChatResponse.THINKING_MARKUP = "<p class='show'><thinking><span>.</span><span>.</span><span>.</span></thinking></p>";
         return ChatResponse;

@@ -71,13 +71,13 @@ scrollable {
 	overflow-x: hidden;
 }
 
-cf-chat-response.cf-nested-scroll {
+cf-chat-response .cf-nested-scroll {
 	overflow-x: hidden;	
 	display: block;
 	max-width: 100%;
 }
 
-.cfx-vertical-margin {
+cf-chat-response .vertical-margin {
 	margin-top: 8px;	
 	margin-bottom: 8px;
 }

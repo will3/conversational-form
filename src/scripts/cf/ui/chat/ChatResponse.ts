@@ -87,7 +87,14 @@ namespace cf {
 			this.attachment = options.attachment;
 
 			if (this.attachment != null) {
-				this.attachment.start(this.el);
+				var div = document.createElement("div");
+				div.classList.add("vertical-margin");
+				this.el.appendChild(div);
+				this.attachment.start(div);
+			}
+
+			if (this.response == null) {
+				this.el.children[1].remove();
 			}
 		}
 
@@ -162,10 +169,10 @@ namespace cf {
 		}
 
 		public processResponseAndSetText(){
-			if(!this.originalResponse)
+			if(!this.originalResponse && !this.attachment)
 				return;
 
-			var innerResponse: string = this.originalResponse;
+			var innerResponse: string = this.originalResponse || '';
 			
 			if(this._tag && this._tag.type == "password" && !this.isRobotResponse){
 				var newStr: string = "";
@@ -387,7 +394,7 @@ namespace cf {
 		public getTemplate () : string {
 			return `<cf-chat-response class="` + (this.isRobotResponse ? "robot" : "user") + `">
 				<thumb><span></span></thumb>
-				<text></text>
+				<text class="chat-response-text"></text>
 			</cf-chat-response>`;
 		}
 	}
