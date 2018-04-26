@@ -97,22 +97,22 @@ conversationalForm.addMessage({
 // 	attachment: new RecordAudioMessage({})
 // });
 
-// conversationalForm.addTags([{
-// 	tag: "input",
-// 	type: "date",
-// 	"cf-questions": "date?"
-// }]);
+conversationalForm.addTags([{
+	tag: "input",
+	type: "date",
+	"cf-questions": "date?"
+}]);
 
-// conversationalForm.addTags([{
-// 	tag: "input",
-// 	type: "datetime-local",
-// 	"cf-questions": "datetime?"
-// }]);
+conversationalForm.addTags([{
+	tag: "input",
+	type: "datetime-local",
+	"cf-questions": "datetime?"
+}]);
 
-// conversationalForm.addTags([{
-// 	tag: "input",
-// 	type: "time",
-// 	"cf-questions": "time?"
-// }]);
+conversationalForm.addTags([{
+	tag: "input",
+	type: "time",
+	"cf-questions": "time?"
+}]);
 
-// conversationalForm.remapTagsAndStartFrom();
+conversationalForm.start();

@@ -4570,7 +4570,7 @@ var cf;
                 _this.el.appendChild(div);
                 _this.attachment.start(div);
             }
-            if (_this.response == null) {
+            if (_this.response == null && _this.isRobotResponse) {
                 _this.el.children[1].remove();
             }
             return _this;

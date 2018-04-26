@@ -93,7 +93,7 @@ namespace cf {
 				this.attachment.start(div);
 			}
 
-			if (this.response == null) {
+			if (this.response == null && this.isRobotResponse) {
 				this.el.children[1].remove();
 			}
 		}
